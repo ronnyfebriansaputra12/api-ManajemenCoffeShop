@@ -19,8 +19,16 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::Resource('/inventoris', InventoriController::class);
 
 Route::post('register', 'App\Http\Controllers\API\AuthController@register');
 Route::post('login', 'App\Http\Controllers\API\AuthController@login');
+
+Route::middleware(['auth'])->group(function () {
+});
+
+Route::group(['middleware' => ['auth:sanctum']], function () {
+    Route::apiResource('inventoris', InventoriController::class);
+});
+
+
 
